@@ -2,8 +2,10 @@ import numpy as np
 import network_functions as nf
 import random
 import json
+import time
 import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix
+#from numba import jit, cuda
 
 class Network():    
     def __init__(self, internal_architecture, learning_rate=0.01, momentum=0, decay=0.01):
@@ -232,7 +234,6 @@ class Network():
 
         return loss
 
-
     def ADAM(self, inputs, expected):         #https://arxiv.org/pdf/1412.6980.pdf
         partial_derivitive_memory = self.divloss(self.forward_propagate(inputs),expected)
         loss = np.sum(self.loss(self.forward_propagate(inputs),expected))
@@ -280,14 +281,14 @@ class Network():
         return loss
         
     ##training
-    ##
+    ##  
     def train(self, trainX, trainY, batch_size=1, epochs=1, learning_rate_decay=0.0, shuffle=False):
         self.epoch_losses = []
         self.current_iteration = 0
         self.current_epoch = 0
         initial_learning_rate = self.learning_rate
         
-        start_time = time.time()
+        #start_time = time.time()
         for n in range(epochs):
             data = self.generate_batches(trainX, trainY, batch_size)
             iteration_losses = []

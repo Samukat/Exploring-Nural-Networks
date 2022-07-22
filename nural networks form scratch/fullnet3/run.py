@@ -4,6 +4,7 @@ from Network import Network, plot_images, print_confusion_matrix, plot_losses
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 if __name__ == "__main__":
     (train_X, train_y), (test_X, test_y) = mnist.load_data()
     print('X_train: ' + str(train_X.shape))
@@ -33,7 +34,7 @@ if __name__ == "__main__":
         flat_y = np.zeros((amount,10), dtype=int)
         for i, value in enumerate(train_y):
             flat_y[i][value] = 1
-        losses = network.train(flat_x,flat_y,32,200, shuffle=True) #https://arxiv.org/pdf/1711.00489.pdf
+        losses = network.train(flat_x,flat_y,32,6, shuffle=True) #https://arxiv.org/pdf/1711.00489.pdf
         plot_losses(losses)
         
     
