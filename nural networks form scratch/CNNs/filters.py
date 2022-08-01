@@ -31,7 +31,7 @@ def plot_images(images, cls_true, cls_pred=None):
 
 
 filter_grid = np.array([[-1,-1,-1],
-                        [-1,1,-1],
+                        [-1,8,-1],
                         [-1,-1,-1]])
 image = train_X[8]
 
@@ -76,25 +76,49 @@ plt.show()
 
 
 
-def convolute(image,kernal):
-    new_shape = image.shape
-    image[0] -= 2
-    image[1] -= 2
+def convolute1(image,kernal): #kinda works
+    new_shape = list(image.shape)
+    new_shape[0] -= 2
+    new_shape[1] -= 2
     new_image = np.zeros(new_shape)
+    
     for x in range(1, image.shape[0]-2):
         for y in range(1, image.shape[1]-2):
             part = image[y-1:y+2,x-1:x+2]
             filtered = np.multiply(filter_grid,np.transpose(part, axes=[2,0,1]))
             filtered = np.transpose(filtered, axes=[1,2,0])
-            new_image[x,y] = np.sum(filtered,axis=(0,1))
+            new_image[y,x] = np.sum(filtered,axis=(0,1))
     return new_image
 
 
+def convolute2(image,kernal): #seperating RGB beforehand
+    new_shape = image.shape
+    if image.shape == 3:
+        RGB_image = np.transpose(image, axes=[2,0,1])
+        new_image = np.zeros(new_shape)
+    else:
+        BW_image = np.array([image])
+        new_image = np.array([np.zeros(new_shape)])
 
-print(convolute(image,filter_grid))
+
+                                 
+    
+    image[0] -= 2
+    image[1] -= 2
+    
+    
+    for x in range(1, image.shape[0]-2):
+        for y in range(1, image.shape[1]-2):
+            part = image[y-1:y+2,x-1:x+2]
+            filtered = np.multiply(filter_grid,np.transpose(part, axes=[2,0,1]))
+            filtered = np.transpose(filtered, axes=[1,2,0])
+            new_image[y,x] = np.sum(filtered,axis=(0,1))
+    return new_image
+
+print(convolute1(image,filter_grid))
 f, axarr = plt.subplots(1,2)
 axarr[0].imshow(image)
-axarr[1].imshow((convolute(image,filter_grid)+255*8)/(255*9*2))
+axarr[1].imshow((convolute1(image,filter_grid)+255*8)/(255*16))
 #plt.imshow((convolute(image,filter_grid)+255)/(255*9*2))
 plt.show()
 
