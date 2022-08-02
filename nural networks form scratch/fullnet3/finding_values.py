@@ -33,9 +33,10 @@ if __name__ == "__main__":
         test_flat_y[i][value] = 1
 
     
-    values = 10
-    test_value_a = np.random.uniform(low=0.0, high=0.06, size=(values)) #lr
-    test_value_b = np.random.uniform(low=0.0, high=0.99, size=(values)) #momentum
+    values = 100
+    test_value_a = np.random.uniform(low=0.0001, high=0.002, size=(values)) #lr
+    test_value_b = np.random.uniform(low=0.8, high=0.99, size=(values)) #momentum
+    test_value_c = np.random.uniform(low=0.9, high=0.999, size=(values)) #momentum
     results = np.zeros((values))
 
     plt.scatter(test_value_a,test_value_b)
@@ -43,7 +44,7 @@ if __name__ == "__main__":
     
     for test in range(values):
         print("\nTest: "+str(test)+". Values {}, {}".format(test_value_a[test],test_value_b[test]))
-        network = Network(internal_architecture, learning_rate=test_value_a[test], momentum=test_value_b[test])
+        network = Network(internal_architecture, learning_rate=test_value_a[test], momentum=test_value_b[test],decay=0.99)
         network.train(train_flat_x,train_flat_y,32,1, shuffle=False)
         results[test] = network.test(test_flat_x,test_flat_y)[0]/10000
         

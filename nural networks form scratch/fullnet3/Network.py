@@ -298,9 +298,9 @@ class Network():
                 
                 #self.back_propergate(x,y)
                 #loss = self.adagrad(x,y)
-                loss = self.SGD(x,y)
+                #loss = self.SGD(x,y)
                 #loss = self.adadelta(x,y)
-                #loss = self.ADAM(x,y)
+                loss = self.ADAM(x,y)
 
                 iteration_losses.append(loss)
                 

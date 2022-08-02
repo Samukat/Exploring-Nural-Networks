@@ -22,7 +22,9 @@ if __name__ == "__main__":
     ]
     #network = Network(internal_architecture, learning_rate=0.03, momentum=0.55)
     #network = Network(internal_architecture, learning_rate=0.03, momentum=0.0,decay=0.6)
-    network = Network(internal_architecture, learning_rate=0.001, momentum=0.9,decay=0.99)
+    #network = Network(internal_architecture, learning_rate=0.001, momentum=0.9,decay=0.99)
+    network = Network(internal_architecture, learning_rate=0.0017, momentum=0.88,decay=0.99)
+
     #network.export_network()
     #network = Network.import_network("9808.json")
     if True:
