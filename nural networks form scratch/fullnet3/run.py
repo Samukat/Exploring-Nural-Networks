@@ -11,7 +11,7 @@ if __name__ == "__main__":
     print('Y_train: ' + str(train_y.shape))
     print('X_test:  '  + str(test_X.shape))
     print('Y_test:  '  + str(test_y.shape))
-    #plot_images(train_X[0:9], train_y[0:9])
+    plot_images(train_X[0:9], train_y[0:9])
 
     ##Setup
     internal_architecture = [
