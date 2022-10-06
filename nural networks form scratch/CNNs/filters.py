@@ -4,6 +4,8 @@ import random
 import pandas as pd
 from tensorflow.keras.datasets import cifar10
 
+##attempting to get filters for CNN working
+
 (train_X, train_y), (test_X, test_y) = cifar10.load_data()
 print('X_train: ' + str(train_X.shape))
 print('Y_train: ' + str(train_y.shape))
