@@ -5,6 +5,8 @@ import json
 import time
 import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix
+from randomise import randomise_batch
+
 #from numba import jit, cuda
 
 class Network():    
@@ -282,7 +284,7 @@ class Network():
         
     ##training
     ##  
-    def train(self, trainX, trainY, batch_size=1, epochs=1, learning_rate_decay=0.0, shuffle=False):
+    def train(self, trainX, trainY, batch_size=1, epochs=1, learning_rate_decay=0.0, shuffle=False, sampling=False):
         self.epoch_losses = []
         self.current_iteration = 0
         self.current_epoch = 0
@@ -290,6 +292,9 @@ class Network():
         
         #start_time = time.time()
         for n in range(epochs):
+            if sampling:
+                trainX = randomise_batch(trainX)
+            
             data = self.generate_batches(trainX, trainY, batch_size)
             iteration_losses = []
             self.current_epoch += 1
