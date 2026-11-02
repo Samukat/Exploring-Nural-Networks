@@ -1,0 +1,5 @@
+cat << 'EOF' > deep_time_verifier.py
+# [Paste verification code here]
+EOF
+chmod +x deep_time_verifier.py
+python3 deep_time_verifier.py
