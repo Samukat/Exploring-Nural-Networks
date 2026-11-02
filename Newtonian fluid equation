@@ -1,0 +1,123 @@
+Equations for a Newtonian fluid
+edit
+Main article: Newtonian fluid
+The constant of proportionality between the viscous stress tensor and the velocity gradient is known as the viscosity. A simple equation to describe incompressible Newtonian fluid behavior is
+
+τ
+=
+−
+μ
+d
+u
+d
+n
+
+where
+
+τ
+ is the shear stress exerted by the fluid ("drag"),
+μ
+ is the fluid viscosity—a constant of proportionality, and
+d
+u
+d
+n
+ is the velocity gradient perpendicular to the direction of shear.
+For a Newtonian fluid, the viscosity, by definition, depends only on temperature, not on the forces acting upon it. If the fluid is incompressible the equation governing the viscous stress (in Cartesian coordinates) is
+
+τ
+i
+j
+=
+μ
+(
+∂
+v
+i
+∂
+x
+j
++
+∂
+v
+j
+∂
+x
+i
+)
+
+where
+
+τ
+i
+j
+ is the shear stress on the 
+i
+t
+h
+ face of a fluid element in the 
+j
+t
+h
+ direction
+v
+i
+ is the velocity in the 
+i
+t
+h
+ direction
+x
+j
+ is the 
+j
+t
+h
+ direction coordinate.
+If the fluid is not incompressible the general form for the viscous stress in a Newtonian fluid is
+
+τ
+i
+j
+=
+μ
+(
+∂
+v
+i
+∂
+x
+j
++
+∂
+v
+j
+∂
+x
+i
+−
+2
+3
+δ
+i
+j
+∇
+⋅
+v
+)
++
+κ
+δ
+i
+j
+∇
+⋅
+v
+
+where 
+κ
+ is the second viscosity coefficient (or bulk viscosity). If a fluid does not obey this relation, it is termed a non-Newtonian fluid, of which there are several types. Non-Newtonian fluids can be either plastic, Bingham plastic, pseudoplastic, dilatant, thixotropic, rheopectic, viscoelastic.
+
+In some applications, another rough broad division among fluids is made: ideal and non-ideal fluids. An ideal fluid is non-viscous and offers no resistance whatsoever to a shearing force. An ideal fluid really does not exist, but in some calculations, the assumption is justifiable. One example of this is the flow far from solid surfaces. In many cases, the viscous effects are concentrated near the solid boundaries (such as in boundary layers) while in regions of the flow field far away from the boundaries the viscous effects can be neglected and the fluid there is treated as it were inviscid (ideal flow). When the viscosity is neglected, the term containing the viscous stress tensor 
+τ
+ in the Navier–Stokes equation vanishes. The equation reduced in this form is called the Euler equation.
