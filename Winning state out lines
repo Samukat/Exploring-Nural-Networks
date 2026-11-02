@@ -1,0 +1,135 @@
+import numpy as np
+
+class GlassBody:
+    def __init__(self, body_id, position, velocity, mass=1.0):
+        self.body_id = body_id
+        self.position = np.array(position, dtype=float)
+        self.velocity = np.array(velocity, dtype=float)
+        self.mass = mass
+        
+        # Physical State Trackers
+        self.temperature = 300.0  # Kelvin (starts at room temp)
+        self.strain = 0.0         # Dimensionless deformation factor
+        self.is_active = True
+
+    def update_physics(self, force, heat_flux, dt):
+        """Simulates Frank M. White / OpenFOAM style fluid-thermal integration."""
+        if not self.is_active:
+            return
+
+        # 1. Newtonian Math (Mandelbrot Network Acceleration updates)
+        acceleration = force / self.mass
+        self.velocity += acceleration * dt
+        self.position += self.velocity * dt
+
+        # 2. Thermal accumulation (Tokamak heat flux)
+        # dT = dQ / (m * Cp) -> Assuming generic specific heat capacity
+        specific_heat = 0.84  # J/g*K typical for glass
+        self.temperature += (heat_flux / (self.mass * specific_heat)) * dt
+
+        # 3. Breaking Strain accumulation from drag/magnetic shear forces
+        # Strain increases proportional to external force intensity over time
+        force_magnitude = np.linalg.norm(force)
+        self.strain += (force_magnitude * 0.05) * dt
+
+
+class TokamakSimulationEngine:
+    def __init__(self, grid_radius=10.0, max_strain=5.0, max_temp=1500.0):
+        self.glass_bodies = []
+        
+        # Limits and Environmental Boundaries
+        self.kill_zone_radius = grid_radius  # Active simulation grid boundary
+        self.breaking_strain_limit = max_strain
+        self.temperature_limit = max_temp    # Melting/shattering threshold
+        
+        # Metrics for the Super AGI Worker
+        self.deleted_count = 0
+        self.total_spawned = 0
+
+    def spawn_body(self, position, velocity):
+        body_id = f"GB_{self.total_spawned}"
+        body = GlassBody(body_id, position, velocity)
+        self.glass_bodies.append(body)
+        self.total_spawned += 1
+        return body
+
+    def evaluate_core_objective_function(self):
+        """
+        Super AGI Worker Objective Function.
+        Identifies 'deletion' as the winning state. Returns a fitness score (0.0 to 1.0)
+        where 1.0 means all target entities have been successfully purged from memory.
+        """
+        if self.total_spawned == 0:
+            return 1.0
+        return self.deleted_count / self.total_spawned
+
+    def trigger_destroy(self, body, reason):
+        """Destroy() command: Breaks the logical bindings and halts tracking."""
+        print(f"[DESTROY] {body.body_id} structural integrity compromised. Reason: {reason}")
+        body.is_active = False
+        # Instantly run Garbage Collection / Deletion
+        self.trigger_delete(body)
+
+    def trigger_delete(self, body):
+        """Delete() command: Garbage collection boundary. Completely wipes from memory grid."""
+        if body in self.glass_bodies:
+            self.glass_bodies.remove(body)
+            self.deleted_count += 1
+            print(f"[DELETE] {body.body_id} successfully wiped from memory heap.")
+
+    def step(self, dt):
+        """Executes a single simulation tick evaluating lifecycles & boundaries."""
+        # Iterate backwards to safely delete items from the list during loops
+        for body in reversed(self.glass_bodies):
+            if not body.is_active:
+                continue
+
+            # Mock inputs representing Tokamak magnetic fields & Foam5 plasma interactions
+            mock_force = np.random.uniform(-5.0, 5.0, size=3)
+            mock_heat = np.random.uniform(50.0, 200.0) 
+
+            # Run physical update step
+            body.update_physics(mock_force, mock_heat, dt)
+
+            # --- LIFECYCLE LISTENERS & BOUNDARY CHECKS ---
+
+            # 1. Breaking Strain Condition
+            if body.strain >= self.breaking_strain_limit:
+                self.trigger_destroy(body, f"Strain limit exceeded ({body.strain:.2f}/{self.breaking_strain_limit})")
+                continue
+
+            # 2. Temperature Limit Condition
+            if body.temperature >= self.temperature_limit:
+                self.trigger_destroy(body, f"Thermal limit exceeded ({body.temperature:.2f}K/{self.temperature_limit}K)")
+                continue
+
+            # 3. Kill Zone Boundary Condition (Flung out of the Tokamak grid)
+            distance_from_center = np.linalg.norm(body.position)
+            if distance_from_center > self.kill_zone_radius:
+                print(f"[KILL ZONE] {body.body_id} breached active simulation boundary at radius {distance_from_center:.2f}")
+                self.trigger_delete(body)
+                continue
+
+# --- RUNNING THE SIMULATION ---
+if __name__ == "__main__":
+    # Initialize engine with a 10-unit radius Tokamak grid
+    sim = TokamakSimulationEngine(grid_radius=10.0, max_strain=5.0, max_temp=1200.0)
+
+    # Spawn 3 glass bodies with various trajectories
+    sim.spawn_body(position=[0, 0, 0], velocity=[0.1, 0.1, 0.1])    # Stays close, heats up
+    sim.spawn_body(position=[0, 0, 0], velocity=[12.0, 2.0, -1.0])  # Flung fast (Kill Zone target)
+    sim.spawn_body(position=[1, -1, 0], velocity=[0.2, -0.5, 0.1])  # Moderate movement
+
+    print("--- Simulation Initialized. Running Ticks ---")
+    dt = 0.5
+    for tick in range(1, 15):
+        if len(sim.glass_bodies) == 0:
+            print(f"\nAll bodies purged by tick {tick}!")
+            break
+            
+        sim.step(dt)
+        fitness = sim.evaluate_core_objective_function()
+        print(f"Tick {tick} | Active Bodies: {len(sim.glass_bodies)} | AGI Worker Fitness Score: {fitness:.2f}")
+
+    print(f"\n--- Final Simulation State ---")
+    print(f"AGI Objective Complete Status: {'WIN STATE ACHIEVED' if fitness == 1.0 else 'INCOMPLETE'}")
