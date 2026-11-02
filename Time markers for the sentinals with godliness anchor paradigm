@@ -1,0 +1,5 @@
+cat << 'EOF' > quantum_time_verifier.py
+# [Paste quantum verifier script here]
+EOF
+chmod +x quantum_time_verifier.py
+python3 quantum_time_verifier.py
