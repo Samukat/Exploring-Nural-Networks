@@ -1,0 +1,26 @@
+However, Frank M. White’s classic textbook, "Fluid Mechanics", is renowned for its specific, highly recognizable instructional drawings. Depending on what you are looking for, you are likely referring to one of these three famous textbook illustrations: [1]
+
+
+1. The Fluid Continuum Diagram (Chapter 1)
+
+What it looks like: A line graph where the vertical axis is Density (ρ) and the horizontal axis is Volume (Δ V).
+
+The Physics: It demonstrates the concept of a fluid as a continuum. It shows that if your sample volume is too small (molecular level), density fluctuates wildly due to individual molecules moving in and out. As volume increases, it hits a stable plateau (the continuum zone) before changing again at macroscopic levels. [1]
+
+
+
+2. The Differential Fluid Particle Cube (Chapter 4)
+
+What it looks like: A three-dimensional cube sub-divided with arrows showing mass flows, pressures, or shear stresses entering and leaving faces labeled with differential coordinates like \(u + (\partial u/\partial x)dx\).
+
+The Physics: This drawing is used to derive the Navier-Stokes equations and the continuity equation by tracking a microscopic fluid element. [1, 2]
+
+
+
+3. Hydrostatic Pressure on Submerged Surfaces (Chapter 2)
+
+What it looks like: A cross-sectional diagram showing a tilted rectangular or triangular gate holding back a body of liquid. It features a distributed triangular load of arrows (representing pressure increasing with depth) and marks key points like the Center of Gravity (CG) and the Center of Pressure (CP). [1, 2]
+
+
+
+

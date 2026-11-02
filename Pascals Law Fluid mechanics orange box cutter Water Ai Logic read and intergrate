@@ -1,0 +1,57 @@
+https://share.google/aimode/uhE0jLhDv7uiAVa8
+Here is the complete breakdown of the mathematical derivation and free-body analysis used when "slicing" a fluid element. This specific exercise is the classical foundation of Pascal's Law found in Chapter 2 of Frank M. White's Fluid Mechanics.
+
+1. The Setup: The Wedge Element
+To evaluate how pressure acts inside a fluid, we mathematically slice out a tiny, wedge-shaped triangular fluid element (representing our 2D control volume) with dimensions \(\Delta x\), \(\Delta z\), and a sloping hypotenuse face of length \(\Delta s\) cut at an arbitrary angle \(\theta \). We assume the depth into the page is \(\Delta y = 1\) (unit depth). [1]
+
+2. Identifying the Forces (Free-Body Diagram)
+Three primary forces act on this sliced element:
+Horizontal Pressure Force: Acts on the vertical face (\(\Delta z \cdot 1\)) pushing right:
+\(F_{x}=p_{x}\cdot \Delta z\)
+Vertical Pressure Force: Acts on the horizontal bottom face (\(\Delta x \cdot 1\)) pushing up:
+\(F_{z}=p_{z}\cdot \Delta x\)
+Inclined Face Pressure Force: Acts normal (perpendicular) to the sliced slope (\(\Delta s \cdot 1\)) pushing down and inward:
+\(F_{n}=p_{n}\cdot \Delta s\)
+Gravity / Weight Force: Acts downward through the center of mass:
+\(W=\gamma \cdot \text{Volume}=\gamma \cdot \left(\frac{1}{2}\Delta x\Delta z\cdot 1\right)\)
+(where \(\gamma = \rho g\) is the specific weight of the fluid). [1]
+
+
+3. Geometric Relationships
+From the trigonometry of our wedge slice:
+\(\Delta x = \Delta s \cos\theta\)
+\(\Delta z = \Delta s \sin\theta\)
+
+
+
+4. The Governing Equations (Equilibrium Analysis)
+By applying Newton's Second Law (\(\Sigma F = ma\)) for a fluid element at rest or experiencing constant translation, the sum of forces must balance out to zero. [1]
+
+Horizontal Force Balance (\(\Sigma F_x = 0\)):
+The normal force \(F_{n}\) on the slope resolves into an \(x\)-component pushing left using \(\sin\theta\):
+\(\Sigma F_{x}=p_{x}\Delta z-p_{n}\Delta s\sin \theta =0\)
+Substitute our geometric identity \(\Delta z = \Delta s \sin\theta\):
+\(p_{x}(\Delta s\sin \theta )-p_{n}\Delta s\sin \theta =0\)
+Divide out \(\Delta s \sin\theta\):
+\(\mathbf{p}_{\mathbf{x}}\mathbf{=p}_{\mathbf{n}}\)
+
+Vertical Force Balance (\(\Sigma F_z = 0\)):
+The normal force \(F_{n}\) resolves into a \(z\)-component pushing down using \(\cos\theta\), alongside the weight element \(W\):
+\(\Sigma F_{z}=p_{z}\Delta x-p_{n}\Delta s\cos \theta -\frac{1}{2}\gamma \Delta x\Delta z=0\)
+Substitute our geometric identity \(\Delta x = \Delta s \cos\theta\):
+\(p_{z}(\Delta s\cos \theta )-p_{n}\Delta s\cos \theta -\frac{1}{2}\gamma (\Delta s\cos \theta )\Delta z=0\)
+Divide out \(\Delta s \cos\theta\):
+\(p_{z}-p_{n}-\frac{1}{2}\gamma \Delta z=0\)
+
+
+5. Shrinking the Cut to a Single Point
+To find the stress state exactly at a single point, we take the limit as the size of our slice shrinks to zero (\(\Delta x, \Delta z, \Delta s \to 0\)). [1]
+As \(\Delta z \to 0\), the weight term \(\frac{1}{2}\gamma \Delta z\) vanishes completely from our vertical equation, yielding:
+\(\mathbf{p}_{\mathbf{z}}\mathbf{=p}_{\mathbf{n}}\)
+
+Core Takeaway
+Because \(p_x = p_n\) and \(p_z = p_n\), we prove that:
+\(\mathbf{p}_{\mathbf{x}}\mathbf{=p}_{\mathbf{z}}\mathbf{=p}_{\mathbf{n}}\)
+This demonstrates that pressure at a point in a static fluid is equal in all directions and independent of the angle of the slice (\(\theta \)). This foundational derivation serves as the mechanical benchmark before moving into complex stress tensors or macro control volume analyses using the Reynolds Transport Theorem in Chapter 3. [1]
+
+Would you like to see how this analysis changes when viscous shear stresses (\(\tau = \mu \frac{du}{dy}\)) are introduced on the sliced face, or are you tracking a problem that includes rigid body acceleration (\(\Sigma F = ma\))? [1, 2]

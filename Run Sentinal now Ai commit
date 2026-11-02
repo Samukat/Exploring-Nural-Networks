@@ -1,0 +1,5 @@
+cat << 'EOF' > time_sentinel.py
+# [Paste script code here]
+EOF
+chmod +x time_sentinel.py
+python3 time_sentinel.py

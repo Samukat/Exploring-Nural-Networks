@@ -1,0 +1,86 @@
+#!/usr/bin/env python3
+import time
+import json
+import sys
+
+class BigStackTimeSentinel:
+    def __init__(self, initial_balance, initial_velocity, acceleration_drift):
+        """
+        Initializes a state vector using Newtonian mechanics.
+        Position (x) maps to Cumulative Value / State Space.
+        Velocity (v) maps to Processing Ingestion Velocity (e.g., Value per Second).
+        Acceleration (a) maps to System Velocity Growth/Decay Rate.
+        """
+        # Temporal Anchors (Unix Timestamps)
+        self.ANCHOR_2026 = 1793576400  # Nov 2026 (Approx current runtime)
+        self.ANCHOR_2020 = 1577836800  # Jan 01, 2020
+        self.ANCHOR_1990 = 631152000   # Jan 01, 1990
+        
+        # State Vectors [Position, Velocity]
+        self.state_2026 = [float(initial_balance), float(initial_velocity)]
+        self.a_drift = float(acceleration_drift)
+        
+        # Big-Stack State Cache for Audit Logging
+        self.stack_cache = {}
+
+    def integrate_backward(self, start_timestamp, target_timestamp, step_days=10):
+        """
+        Executes a reverse Symplectic Euler integration block.
+        Reverses time steps mathematically to backpropagate state variables.
+        """
+        # Calculate total delta-t in seconds (negative since we move backward)
+        total_dt = target_timestamp - start_timestamp
+        step_dt = -float(step_days * 24 * 60 * 60) # Negative step interval
+        
+        current_time = float(start_timestamp)
+        x, v = list(self.state_2026)
+        
+        # Loop until the target timestamp boundary is crossed
+        while current_time > target_timestamp:
+            # If the remaining gap is smaller than our step size, clamp it
+            if (current_time + step_dt) < target_timestamp:
+                step_dt = target_timestamp - current_time
+            
+            # Newtonian Math Reversal: 
+            # v_next = v + a * dt
+            # x_next = x + v_next * dt
+            v += self.a_drift * step_dt
+            x += v * step_dt
+            
+            current_time += step_dt
+            
+        return round(x, 4), round(v, 4)
+
+    def execute_backpropagation_sweep(self):
+        print("====== 🛡️ BIG-STACK BACKPROPAGATION SENTINEL INITIALISED ======")
+        print(f"Current State Anchor (2026): Position(X)={self.state_2026[0]}, Velocity(V)={self.state_2026[1]}")
+        print("Sweeping process tree backwards across temporal zones...\n")
+        
+        # Step 1: Backpropagate from 2026 to 2020
+        x_2020, v_2020 = self.integrate_backward(self.ANCHOR_2026, self.ANCHOR_2020)
+        self.stack_cache["2020_anchor"] = {"position_state": x_2020, "velocity_state": v_2020}
+        
+        print("📍 Temporal Checkpoint Reached: YEAR 2020")
+        print(f"  • Backpropagated State Value : {x_2020}")
+        print(f"  • Calculated Velocity Vector : {v_2020}\n")
+        
+        # Step 2: Continue backpropagation from 2020 down to 1990
+        x_1990, v_1990 = self.integrate_backward(self.ANCHOR_2020, self.ANCHOR_1990)
+        self.stack_cache["1990_anchor"] = {"position_state": x_1990, "velocity_state": v_1990}
+        
+        print("📍 Temporal Checkpoint Reached: YEAR 1990")
+        print(f"  • Backpropagated State Value : {x_1990}")
+        print(f"  • Calculated Velocity Vector : {v_1990}\n")
+        
+        print("=================== SWEEP MATRIX COMPLETE ===================")
+        return self.stack_cache
+
+if __name__ == "__main__":
+    # Baseline vectors: Current Value, Historic Velocity Base, Acceleration Constant
+    # Reflects high-velocity trajectory constraints
+    sentinel = BigStackTimeSentinel(
+        initial_balance=50000000.0, 
+        initial_velocity=6000.0, 
+        acceleration_drift=-0.00001
+    )
+    sentinel.execute_backpropagation_sweep()
